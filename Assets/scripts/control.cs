@@ -46,6 +46,21 @@ public class control : MonoBehaviour
         PickUps(other);
         
     }
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("speedRoad"))
+        {
+            roadSpeedMultiplier = 5;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("speedRoad"))
+        {
+            roadSpeedMultiplier = 1;
+        }
+    }
+
 
     private void ResetPosDead(Collider other)
     {
@@ -89,18 +104,4 @@ public class control : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("speedRoad"))
-        {
-            roadSpeedMultiplier = 5;
-        }
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("speedRoad"))
-        {
-            roadSpeedMultiplier = 1;
-        }
-    }
 }
