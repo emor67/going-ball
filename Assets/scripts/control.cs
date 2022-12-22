@@ -44,7 +44,7 @@ public class control : MonoBehaviour
         ResetPosDead(other);
         CheckPoint(other);
         PickUps(other);
-        //SpeedRoad(other);
+        
     }
 
     private void ResetPosDead(Collider other)
@@ -89,11 +89,18 @@ public class control : MonoBehaviour
         }
     }
 
-    /*private void SpeedRoad(Collider other)
+    private void OnCollisionStay(Collision collision)
     {
-        if (other.gameObject.CompareTag("speedRoad"))
+        if (collision.gameObject.CompareTag("speedRoad"))
         {
-            roadSpeedMultiplier = 2;
+            roadSpeedMultiplier = 5;
         }
-    }*/
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("speedRoad"))
+        {
+            roadSpeedMultiplier = 1;
+        }
+    }
 }
