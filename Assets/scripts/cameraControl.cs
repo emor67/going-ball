@@ -11,11 +11,13 @@ public class cameraControl : MonoBehaviour
 
     private float rotateY;
     private Vector3 offset;
+
     private void Start()
     {
         offset = transform.position - player.transform.position;
-        
     }
+
+
     private void LateUpdate()
     {
         Vector3 newPosition = player.transform.position + offset;
@@ -24,6 +26,7 @@ public class cameraControl : MonoBehaviour
         rotateY = Input.GetAxis("Horizontal") * rotateLimiter;
         transform.Rotate(new Vector3(0, rotateY, 0));
 
+      
     }
 
 }
