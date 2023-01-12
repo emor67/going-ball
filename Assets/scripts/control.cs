@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class control : MonoBehaviour
 {
     public float speed;
     public Text countText;
+    public Text winScoreText;
+
     private int count;
     public new Camera camera;
     private Rigidbody rb;
     public float roadSpeedMultiplier;
+    public GameObject winPanel;
+    public GameObject gamePanel;
 
 
     Vector3 checkPointPosition;
@@ -44,7 +49,12 @@ public class control : MonoBehaviour
         ResetPosDead(other);
         CheckPoint(other);
         PickUps(other);
-        
+        Win(other);
+
+        if (count < 0)
+        {
+            SceneManager.LoadScene("GameMain");
+        }        
     }
     private void OnCollisionStay(Collision collision)
     {
@@ -71,6 +81,9 @@ public class control : MonoBehaviour
             gameObject.transform.position = checkPointPosition;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+
+            count = count - 1;
+            setCountText();
         }
     }
 
@@ -80,7 +93,8 @@ public class control : MonoBehaviour
 
             //camera.transform.rotation = other.transform.rotation;
             UpdateCheckPointPosition(other.transform.position);
-            
+            other.gameObject.SetActive(false);
+
         }
     }
 
@@ -104,4 +118,18 @@ public class control : MonoBehaviour
         }
     }
 
+    private void Win(Collider other)
+    {
+        if (other.gameObject.CompareTag("winZone"))
+        {
+            //winPanel will be active and, play again button will be added
+            winPanel.gameObject.SetActive(true);
+            gamePanel.gameObject.SetActive(false);
+
+            winScoreText.text = "Your Score : " + count.ToString();
+
+            Time.timeScale = 0;
+        }
+    }
+    
 }
